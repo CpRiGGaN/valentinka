@@ -4,97 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Valentinka 2026</title>
-    <style>
-        /* --- СТИЛИ (CSS) --- */
-        @import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
-
-        :root {
-            --win-grey: #c0c0c0;
-            --win-blue: #000080;
-            --accent-pink: #ff758f;
-            --env-color: #ff9a9e;
-            --env-dark: #e27d81;
-        }
-
-        * { box-sizing: border-box; user-select: none; }
-
-        body {
-            margin: 0; padding: 0; height: 100vh; width: 100vw;
-            font-family: 'VT323', monospace; overflow: hidden; background-color: black;
-        }
-
-        #screen-start, #screen-desktop {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background: url('https://i.pinimg.com/originals/1e/86/d4/1e86d42c748c5b8849c36868dc3b984d.gif') no-repeat center center;
-            background-size: cover;
-        }
-
-        .crt-overlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%);
-            background-size: 100% 4px; z-index: 9999; pointer-events: none;
-            box-shadow: inset 0 0 100px rgba(0,0,0,0.5);
-        }
-
-        .bg-decoration {
-            position: absolute; color: var(--accent-pink); font-size: 2rem; opacity: 0.6;
-            z-index: 1; text-shadow: 2px 2px 0 #000; animation: floatUp linear infinite;
-        }
-        @keyframes floatUp { 0% { transform: translateY(0) rotate(0deg); opacity: 0.6; } 100% { transform: translateY(-120vh) rotate(20deg); opacity: 0; } }
-        
-        /* Стили для сердечек */
-        .heart-1 { left: 10%; bottom: -10%; animation-duration: 7s; font-size: 3rem; }
-        .heart-2 { left: 30%; bottom: -20%; animation-duration: 10s; }
-        .heart-3 { left: 50%; bottom: -15%; animation-duration: 8s; }
-        .heart-4 { left: 70%; bottom: -10%; animation-duration: 12s; }
-        .heart-5 { left: 90%; bottom: -25%; animation-duration: 9s; }
-        .heart-6 { left: 20%; bottom: -30%; animation-duration: 11s; }
-
-        #screen-start {
-            z-index: 100; display: flex; justify-content: center; align-items: center;
-            background-color: rgba(0,0,0,0.7); background-blend-mode: multiply;
-            transition: opacity 0.8s ease;
-        }
-
-        .valentine-container { text-align: center; }
-        .game-title { color: white; font-size: 4rem; text-shadow: 4px 4px 0 var(--accent-pink), 6px 6px 0 #000; margin-bottom: 40px; }
-
-        .pixel-letter-container {
-            width: 320px; height: 220px; position: relative; margin: 0 auto 30px; cursor: pointer; transition: transform 0.2s;
-        }
-        .pixel-letter-container:hover { transform: translateY(-5px); }
-        .envelope-base { position: absolute; bottom: 0; left: 0; width: 100%; height: 100%; background: var(--env-color); border: 6px solid #000; z-index: 10; }
-        .envelope-flap { position: absolute; top: 0; left: 0; width: 100%; height: 50%; background: var(--env-dark); border: 6px solid #000; border-bottom: none; z-index: 20; transform-origin: top; transition: transform 0.4s steps(4, end), opacity 0.1s steps(1, end) 0.3s; }
-        .paper-inside { position: absolute; top: 10px; left: 50%; transform: translateX(-50%); width: 85%; height: 90%; background: white; border: 4px solid #000; z-index: 5; display: flex; justify-content: center; align-items: center; font-size: 1.5rem; font-weight: bold; color: black; transition: transform 0.8s steps(8, end) 0.3s; }
-        
-        .pixel-letter-container.is-opening .envelope-flap { transform: scaleY(0); opacity: 0; }
-        .pixel-letter-container.is-opening .paper-inside { transform: translateX(-50%) translateY(-150px); z-index: 30; }
-
-        .click-hint { color: white; font-size: 1.5rem; margin-top: 20px; letter-spacing: 2px; }
-        .blink { animation: blink 1s infinite steps(1); }
-        @keyframes blink { 50% { opacity: 0; } }
-
-        #screen-desktop { display: none; }
-        .system-info { position: absolute; top: 20px; left: 20px; background: rgba(0, 0, 0, 0.6); border: 2px solid var(--accent-pink); padding: 15px; color: white; z-index: 50; }
-        
-        /* Исправленная сетка иконок (2x2) */
-        .desktop-icons-container { width: 100%; height: 100%; display: flex; justify-content: center; align-items: center; }
-        .desktop-icons-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 40px; background: rgba(255, 255, 255, 0.2); padding: 30px; border: 3px solid white; backdrop-filter: blur(5px); }
-        
-        .icon { width: 100px; text-align: center; cursor: pointer; color: white; text-shadow: 2px 2px 0 #000; }
-        .icon-img { width: 80px; height: 80px; background: var(--win-grey); border: 2px solid black; margin: 0 auto 10px; display: flex; justify-content: center; align-items: center; font-size: 40px; }
-        
-        .window { position: absolute; width: 500px; background: var(--win-grey); border: 2px solid white; border-right-color: #404040; border-bottom-color: #404040; display: none; flex-direction: column; z-index: 10; box-shadow: 10px 10px 0 rgba(0,0,0,0.5); }
-        .title-bar { background: var(--win-blue); padding: 5px 10px; display: flex; justify-content: space-between; color: white; font-weight: bold; cursor: grab; }
-        .window-body { padding: 15px; color: black; font-size: 1.4rem; max-height: 400px; overflow-y: auto; }
-        
-        .taskbar { position: absolute; bottom: 0; width: 100%; height: 40px; background: var(--win-grey); border-top: 2px solid white; display: flex; align-items: center; justify-content: space-between; padding: 0 10px; }
-        .clock { background: white; border: 2px solid #888; padding: 2px 10px; }
-        .gallery-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
-        .photo-item { height: 120px; background-size: cover; border: 2px solid #888; }
-        .track { padding: 8px; background: white; border: 1px solid #888; margin-bottom: 5px; cursor: pointer; }
-        .track.active { background: var(--win-blue); color: white; }
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
@@ -164,14 +74,16 @@
         </div>
     </div>
 
-    <div class="window" id="win-photos">
+    <div class="window" id="win-photos" style="width: 700px;">
         <div class="title-bar"><span>GALLERY</span><button onclick="closeWindow('win-photos')">X</button></div>
         <div class="window-body">
             <div class="gallery-grid">
                 <div class="photo-item" style="background-image: url('photo_2025-09-23_21-35-28.jpg');"></div>
                 <div class="photo-item" style="background-image: url('photo_2025-09-23_21-35-281.jpg');"></div>
                 <div class="photo-item" style="background-image: url('photo_2025-09-29_00-08-09.jpg');"></div>
-                <div class="photo-item" style="background-image: url('photo_2026%2001%2022_23%2031%2017.jpg');"></div>
+                <div class="photo-item" style="background-image: url('photo_2026-01-22_23-31-17.jpg');"></div>
+                <div class="photo-item" style="background-image: url('%D0%B1%D0%BE%D1%82%D0%B0%D0%BD%D0%B8%D0%BA%D0%B0.jpg');"></div>
+                <div class="photo-item" style="background-image: url('photo_2026-02-11_21-01-24.jpg');"></div>
             </div>
         </div>
     </div>
@@ -206,64 +118,6 @@
         </div>
     </div>
 
-    <script>
-        // --- СКРИПТЫ (JS) ---
-        let isAnimating = false;
-        let zIndexCounter = 100;
-
-        function openLetterAnim() {
-            if (isAnimating) return;
-            isAnimating = true;
-            document.querySelector('.pixel-letter-container').classList.add('is-opening');
-            document.querySelector('.click-hint').style.display = 'none';
-            setTimeout(startGame, 1200);
-        }
-
-        function startGame() {
-            document.getElementById('screen-start').style.opacity = '0';
-            setTimeout(() => {
-                document.getElementById('screen-start').style.display = 'none';
-                document.getElementById('screen-desktop').style.display = 'block';
-                openWindow('win-letter');
-            }, 800);
-        }
-
-        function openWindow(id) {
-            const win = document.getElementById(id);
-            win.style.display = 'flex';
-            win.style.zIndex = ++zIndexCounter;
-            if (!win.style.top) {
-                win.style.left = (window.innerWidth/2 - 250) + (Math.random()*40-20) + 'px';
-                win.style.top = (window.innerHeight/2 - 150) + (Math.random()*40-20) + 'px';
-            }
-        }
-
-        function closeWindow(id) { document.getElementById(id).style.display = 'none'; }
-
-        function updateClock() {
-            const now = new Date();
-            document.getElementById('clock').innerText = `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
-        }
-        setInterval(updateClock, 1000); updateClock();
-
-        function playSong(url, element) {
-            const player = document.getElementById('audio-player');
-            player.src = url; player.play();
-            document.querySelectorAll('.track').forEach(t => t.classList.remove('active'));
-            element.classList.add('active');
-        }
-
-        // Drag and Drop логика
-        document.querySelectorAll('.window').forEach(win => {
-            const titleBar = win.querySelector('.title-bar');
-            let isDragging = false, offsetX, offsetY;
-            titleBar.onmousedown = (e) => {
-                isDragging = true; win.style.zIndex = ++zIndexCounter;
-                offsetX = e.clientX - win.offsetLeft; offsetY = e.clientY - win.offsetTop;
-            };
-            document.onmousemove = (e) => { if (isDragging) { win.style.left = (e.clientX - offsetX) + 'px'; win.style.top = (e.clientY - offsetY) + 'px'; } };
-            document.onmouseup = () => isDragging = false;
-        });
-    </script>
+    <script src="script.js"></script>
 </body>
 </html>
