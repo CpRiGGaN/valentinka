@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Valentinka 2026</title>
     <style>
-        /* --- ТВОЙ CSS ИЗ CODEPEN --- */
+        /* --- СТИЛИ (CSS) --- */
         @import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
 
         :root {
@@ -76,8 +76,11 @@
 
         #screen-desktop { display: none; }
         .system-info { position: absolute; top: 20px; left: 20px; background: rgba(0, 0, 0, 0.6); border: 2px solid var(--accent-pink); padding: 15px; color: white; z-index: 50; }
+        
+        /* Исправленная сетка иконок (2x2) */
         .desktop-icons-container { width: 100%; height: 100%; display: flex; justify-content: center; align-items: center; }
-        .desktop-icons-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 40px; background: rgba(255, 255, 255, 0.2); padding: 30px; border: 3px solid white; backdrop-filter: blur(5px); }
+        .desktop-icons-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 40px; background: rgba(255, 255, 255, 0.2); padding: 30px; border: 3px solid white; backdrop-filter: blur(5px); }
+        
         .icon { width: 100px; text-align: center; cursor: pointer; color: white; text-shadow: 2px 2px 0 #000; }
         .icon-img { width: 80px; height: 80px; background: var(--win-grey); border: 2px solid black; margin: 0 auto 10px; display: flex; justify-content: center; align-items: center; font-size: 40px; }
         
@@ -165,9 +168,10 @@
         <div class="title-bar"><span>GALLERY</span><button onclick="closeWindow('win-photos')">X</button></div>
         <div class="window-body">
             <div class="gallery-grid">
-                <div class="photo-item" style="background-image: url('https://raw.githubusercontent.com/CpRiGGaN/valentinka/main/photo_2025-09-23_21-35-28.jpg');"></div>
-                <div class="photo-item" style="background-image: url('https://raw.githubusercontent.com/CpRiGGaN/valentinka/main/photo_2025-09-29_00-08-09.jpg');"></div>
-                <div class="photo-item" style="background-image: url('https://raw.githubusercontent.com/CpRiGGaN/valentinka/main/photo_2026-01-22_23-31-17.jpg');"></div>
+                <div class="photo-item" style="background-image: url('photo_2025-09-23_21-35-28.jpg');"></div>
+                <div class="photo-item" style="background-image: url('photo_2025-09-23_21-35-281.jpg');"></div>
+                <div class="photo-item" style="background-image: url('photo_2025-09-29_00-08-09.jpg');"></div>
+                <div class="photo-item" style="background-image: url('photo_2026%2001%2022_23%2031%2017.jpg');"></div>
             </div>
         </div>
     </div>
@@ -176,8 +180,22 @@
         <div class="title-bar"><span>WINAMP</span><button onclick="closeWindow('win-music')">X</button></div>
         <div class="window-body">
             <audio id="audio-player" controls style="width: 100%; margin-bottom: 10px;"></audio>
-            <div class="track" onclick="playSong('https://raw.githubusercontent.com/CpRiGGaN/valentinka/main/cheri-cheri-lady-lyrics.mp3', this)">1. Modern Talking - Cheri Cheri Lady</div>
-            <div class="track" onclick="playSong('https://raw.githubusercontent.com/CpRiGGaN/valentinka/main/The%20Police%20-%20Every%20Breath%20You%20Take.mp3', this)">2. The Police - Every Breath</div>
+            
+            <div class="track" onclick="playSong('cheri-cheri-lady-lyrics.mp3', this)">
+                1. Modern Talking - Cheri Cheri Lady
+            </div>
+            
+            <div class="track" onclick="playSong('The%20Police%20-%20Every%20Breath%20You%20Take.mp3', this)">
+                2. The Police - Every Breath You Take
+            </div>
+
+            <div class="track" onclick="playSong('Aerosmith_-_I_Dont_Want_to_Miss_a_Thing_(musmore.com).mp3', this)">
+                3. Aerosmith - I Don't Want to Miss a Thing
+            </div>
+
+            <div class="track" onclick="playSong('scorpions_obsession_-_obsession_(z3.fm).mp3', this)">
+                4. Scorpions - Obsession
+            </div>
         </div>
     </div>
 
@@ -189,7 +207,7 @@
     </div>
 
     <script>
-        // --- ТВОЙ JS ИЗ CODEPEN ---
+        // --- СКРИПТЫ (JS) ---
         let isAnimating = false;
         let zIndexCounter = 100;
 
