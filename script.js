@@ -51,10 +51,27 @@ function playSong(url, element) {
 document.querySelectorAll('.window').forEach(win => {
     const titleBar = win.querySelector('.title-bar');
     let isDragging = false, offsetX, offsetY;
-    titleBar.onmousedown = (e) => {
-        isDragging = true; win.style.zIndex = ++zIndexCounter;
-        offsetX = e.clientX - win.offsetLeft; offsetY = e.clientY - win.offsetTop;
-    };
-    document.onmousemove = (e) => { if (isDragging) { win.style.left = (e.clientX - offsetX) + 'px'; win.style.top = (e.clientY - offsetY) + 'px'; } };
-    document.onmouseup = () => isDragging = false;
+    
+    // Начало перетаскивания
+    titleBar.addEventListener('mousedown', (e) => {
+        isDragging = true;
+        win.style.zIndex = ++zIndexCounter;
+        offsetX = e.clientX - win.offsetLeft;
+        offsetY = e.clientY - win.offsetTop;
+        titleBar.style.cursor = 'grabbing'; // Курсор-рука сжимается
+    });
+
+    // Движение мыши
+    document.addEventListener('mousemove', (e) => {
+        if (isDragging) {
+            win.style.left = (e.clientX - offsetX) + 'px';
+            win.style.top = (e.clientY - offsetY) + 'px';
+        }
+    });
+
+    // Отпускание мыши
+    document.addEventListener('mouseup', () => {
+        isDragging = false;
+        titleBar.style.cursor = 'grab'; // Курсор-рука разжимается
+    });
 });
